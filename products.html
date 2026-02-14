@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - BHASKAR MOBILES PARTS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="products.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Top Header Section -->
+    <header class="top-header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="index.html">
+                    <span class="logo-icon"><i class="fas fa-mobile-screen"></i></span>
+                    <span class="logo-text">BHASKAR<span> MOBILES PARTS</span></span>
+                </a>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <div class="category-dropdown">
+                        <select id="categorySelect">
+                            <option value="">All Categories</option>
+                            <option value="mobile">Mobile Parts</option>
+                            <option value="tablet">Tablet Parts</option>
+                            <option value="laptop">Laptop Parts</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="tools">Repair Tools</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="search-input-wrapper">
+                        <input type="text" class="search-input" placeholder="Search for mobile parts...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <a href="index.html" class="home-btn">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Products Section -->
+    <main class="products-main">
+        <div class="products-container">
+            <!-- Category Title -->
+            <div class="products-header">
+                <h1 class="products-title" id="categoryTitle">All Products</h1>
+                <p class="products-count" id="productsCount">Showing 0 products</p>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded dynamically via JavaScript -->
+            </div>
+
+            <!-- No Products Message -->
+            <div class="no-products" id="noProducts" style="display: none;">
+                <i class="fas fa-box-open"></i>
+                <h3>No products found</h3>
+                <p>Sorry, we couldn't find any products in this category.</p>
+                <a href="index.html" class="back-home-btn">Back to Home</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/1234567890" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="products.js"></script>
+</body>
+</html>
