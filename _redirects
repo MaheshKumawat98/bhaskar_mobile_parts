@@ -1,0 +1,8 @@
+# Netlify Redirects for BHASKAR Mobile Parts
+# This file ensures proper routing for the static site
+
+# Redirect index.html to root
+/index.html / 200
+
+# SPA Fallback - serve index.html for all routes (if using client-side routing in future)
+/* /index.html 200
