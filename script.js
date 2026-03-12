@@ -90,6 +90,15 @@ function initCategoryNavigation() {
         item.addEventListener('click', function(e) {
             e.preventDefault();
             
+            // Get category
+            const category = this.dataset.category;
+            
+            // If home category, stay on current page, otherwise navigate to products.html
+            if (category !== 'home') {
+                window.location.href = 'products.html?category=' + category;
+                return;
+            }
+            
             // Remove active class from all items with animation
             categoryItems.forEach(cat => {
                 cat.classList.remove('active');
@@ -104,8 +113,6 @@ function initCategoryNavigation() {
                 this.style.transform = 'scale(1)';
             }, 200);
 
-            // Get category
-            const category = this.dataset.category;
             console.log('Category selected:', category);
         });
     });

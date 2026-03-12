@@ -379,6 +379,44 @@ const categoryTitle = document.getElementById('categoryTitle');
 const productsCount = document.getElementById('productsCount');
 const noProducts = document.getElementById('noProducts');
 
+// Filter and render products by category
+function filterAndRenderProducts(category) {
+    const filteredProducts = filterProducts(category);
+    
+    // Update title
+    const categoryNamesMap = {
+        'mobile': 'Mobile Parts',
+        'tablet': 'Tablet Parts',
+        'laptop': 'Laptop Parts',
+        'accessories': 'Accessories',
+        'tools': 'Repair Tools',
+        'services': 'Repair Services'
+    };
+    
+    if (category && category !== 'all' && category !== 'home') {
+        categoryTitle.innerHTML = `${categoryNamesMap[category] || category} <span class="category-badge">${filteredProducts.length} Products</span>`;
+    } else {
+        categoryTitle.textContent = 'All Products';
+    }
+    
+    // Update count
+    productsCount.textContent = `Showing ${filteredProducts.length} products`;
+    
+    // Check if products exist
+    if (filteredProducts.length === 0) {
+        productsGrid.style.display = 'none';
+        noProducts.style.display = 'block';
+        return;
+    }
+    
+    // Show products grid
+    productsGrid.style.display = 'grid';
+    noProducts.style.display = 'none';
+    
+    // Render products
+    productsGrid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+}
+
 // Get category from URL
 function getCategoryFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -387,9 +425,18 @@ function getCategoryFromURL() {
 
 // Filter products by category
 function filterProducts(category) {
-    if (!category || category === 'all') {
+    // Home tab - show all products
+    if (!category || category === 'all' || category === 'home') {
         return productsData;
     }
+    
+    // Mobile Parts - show all existing products (they're all mobile parts)
+    if (category === 'mobile') {
+        return productsData;
+    }
+    
+    // Tablet, Laptop, Accessories, Tools, Services - return empty for now
+    // These categories don't have products yet
     return productsData.filter(product => product.category === category);
 }
 
@@ -424,10 +471,32 @@ function createProductCard(product) {
 // Render products
 function renderProducts() {
     const category = getCategoryFromURL();
+    
+    // Set active category tab based on URL (if category nav exists)
+    const categoryItems = document.querySelectorAll('.category-item');
+    if (categoryItems.length > 0 && category) {
+        categoryItems.forEach(item => {
+            if (item.getAttribute('data-category') === category) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+    
     const filteredProducts = filterProducts(category);
     
     // Update title
-    if (category && category !== 'all') {
+    const categoryNames = {
+        'mobile': 'Mobile Parts',
+        'tablet': 'Tablet Parts',
+        'laptop': 'Laptop Parts',
+        'accessories': 'Accessories',
+        'tools': 'Repair Tools',
+        'services': 'Repair Services'
+    };
+    
+    if (category && category !== 'all' && category !== 'home') {
         categoryTitle.innerHTML = `${categoryNames[category] || category} <span class="category-badge">${filteredProducts.length} Products</span>`;
     } else {
         categoryTitle.textContent = 'All Products';
@@ -552,6 +621,39 @@ function initThemeToggle() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    // Category navigation click handlers
+    const categoryItems = document.querySelectorAll('.category-item');
+    categoryItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get category from data attribute
+            const category = this.getAttribute('data-category');
+            
+            // If home category, show all products and stay on current page
+            if (category === 'home') {
+                // Remove active class from all items
+                categoryItems.forEach(cat => cat.classList.remove('active'));
+                
+                // Add active class to home item
+                this.classList.add('active');
+                
+                // Show all products
+                filterAndRenderProducts('all');
+                return;
+            }
+            
+            // Remove active class from all items
+            categoryItems.forEach(cat => cat.classList.remove('active'));
+            
+            // Add active class to clicked item
+            this.classList.add('active');
+            
+            // Filter products based on category
+            filterAndRenderProducts(category);
+        });
+    });
+    
     renderProducts();
     initThemeToggle();
 });
